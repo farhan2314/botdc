@@ -2,9 +2,10 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits, SlashCommandBuilder, MessageEmbed } = require('discord.js');
 const pingCommand = require('./commands/fun/ping');
-const { token } = require('./config.json');
 const { ActivityType } = require('discord.js');
+const dotenv = require('dotenv');
 
+dotenv.config()
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.modals = new Collection();
@@ -12,6 +13,7 @@ client.cooldowns = new Collection();
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, 'commands');
 const commandFolders = fs.readdirSync(foldersPath);
+const token = process.env.DISCORD_TOKEN;
 
 for (const folder of commandFolders) {
 	const commandsPath = path.join(foldersPath, folder);
